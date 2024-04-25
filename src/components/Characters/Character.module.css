@@ -1,0 +1,59 @@
+.character {
+    position: absolute;
+    width: 16px;
+    /* margin-bottom: 21px; */
+    z-index: auto;
+}
+
+.character_sprite_container {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    /* left: 2px;
+    top: 1px; */
+    /* background-color: red; */
+    overflow: hidden;
+    /* border: 1px solid red */
+}
+
+.character_spritesheet {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    margin: 0;
+}
+
+.character_shadow {
+    position: absolute;
+    width: 16px;
+    bottom: -20px;
+    opacity: 50%;
+}
+
+.character[data-facing="up"] .character_spritesheet {
+    left: -16px
+}
+
+.character[data-facing="left"] .character_spritesheet {
+    left: -32px
+}
+
+.character[data-facing="right"] .character_spritesheet {
+    left: -48px
+}
+
+.character[data-walking="true"] .character_spritesheet {
+    animation: charcterWalk 0.75s steps(4) infinite;
+}
+
+@keyframes charcterWalk {
+    from {
+        transform: translate3d(0, 0px, 0);
+    }
+    to {
+        transform: translate3d(0, -100%, 0);
+    }
+}

@@ -1,0 +1,15 @@
+.map {
+    /* background-image: url("../../assets/Samurai_Level_1_Map.png"); */
+    /* background-repeat: no-repeat;
+    background-size: cover; */
+    /* z-index: auto; */
+    width: calc(var(--grid-cell) * 40);
+    height: calc(var(--grid-cell) * 23);
+    position: absolute;
+}
+
+.scale {
+    transform: scale(3);
+    transform-origin: top left;
+    position: relative;
+}

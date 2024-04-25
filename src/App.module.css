@@ -1,0 +1,12 @@
+:root {
+    --grid-cell: 16px;
+}
+
+.background {
+    background-color: rgb(63, 63, 63);
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}

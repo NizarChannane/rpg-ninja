@@ -1,0 +1,9 @@
+.camera {
+    background-color: rgb(153, 236, 225);
+    box-sizing: border-box;
+    border: 2px solid black;
+    width: 960px;
+    height: 864px;
+    z-index: 1;
+    overflow: hidden;
+}
