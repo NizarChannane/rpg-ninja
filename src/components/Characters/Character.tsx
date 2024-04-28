@@ -73,36 +73,6 @@ export default function Character(props: TCharacterProps) {
                                 : defaultCharacterState
     const [characterState, setCharacterState] = useState<TcharacterState>(initialState);
 
-	// const NPCMove = (prevState: TcharacterState): TcharacterState => {
-	// 	let coordUpdate = prevState.coord;
-	// 	let progressUpdate = prevState.movingProgressRemaining;
-	// 	let facingUpdate = prevState.facing;
-	// 	let walkingUpdate = prevState.walking;
-
-	// 	if(progressUpdate > 0) {
-	// 		walkingUpdate = "true";
-	// 		const [property, change] = directionUpdates[prevState.facing];
-	// 		coordUpdate[property] += change;
-	// 		progressUpdate -= 1;
-	// 	};
-
-	// 	if(progressUpdate === 0) {
-	// 		walkingUpdate = "false";
-	// 	}
-
-	// 	return {
-	// 		...prevState,
-	// 		coord: coordUpdate,
-	// 		movingProgressRemaining: progressUpdate,
-	// 		facing: facingUpdate,
-	// 		walking: walkingUpdate
-	// 	};
-	// }
-
-    // const startBehavior = () => {
-        
-    // }
-
     const walk = () => {
         setCharacterState((prevState) => {
             let coordUpdate = prevState.coord;
@@ -145,18 +115,20 @@ export default function Character(props: TCharacterProps) {
         walk();
 	};
 
-    useEffect(() => {
-        if(props.isPlayer) {
-            setCharacterState(props.gameState.player);
-        } else {
-            setCharacterState(props.gameState.npcs[props.index])
-        };
+    // useEffect(() => {
+    //     if(props.isPlayer) {
+    //         setCharacterState(props.gameState.player);
+    //     } else {
+    //         setCharacterState(props.gameState.npcs[props.index])
+    //     };
 
-    }, [props.gameState]);
+    // }, [props.gameState]);
 
 	useEffect(() => {
 		updatePosition();
 	}, [props.step]);
+
+	// console.log("rendered");
 
 	return (
 		<div 

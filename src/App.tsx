@@ -28,7 +28,7 @@ const gameInitialState: TGameState = {
 		movingProgressRemaining: 0,
 		facing: "up",
 		walking: "false",
-		speed: 1,
+		speed: 2,
 		characterWidth: 16,
 		characterHeight: 16
 	},
@@ -72,17 +72,25 @@ export default function App() {
 	const [step, setStep] = useState<number>(0);
 	const [gameState, _setGameState] = useState<TGameState>(gameInitialState);
 
-	const startStep = () => {
-		setStep(prevState => prevState === 1 ? 0 : 1)
-		// console.log("step");
+	// const startStep = () => {
+	// 	setStep(prevState => prevState === 1 ? 0 : 1)
+	// 	// console.log("step");
 
-		setTimeout(() => {
-			startStep();
-		}, 1000 / 60);
-	};
+	// 	setTimeout(() => {
+	// 		startStep();
+	// 	}, 1000 );
+	// };
+
+	// console.log("render");
 
 	useEffect(() => {
-		startStep();
+		// startStep();
+
+		const stepTimeout = setInterval(() => {
+				setStep(prevState => prevState === 1 ? 0 : 1);
+		}, 1000 / 30);
+
+		return () => clearInterval(stepTimeout)
 	}, []);
 
 	return (
