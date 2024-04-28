@@ -6,7 +6,6 @@ type TCameraProps = {
 };
 
 export default function Camera({ children }: TCameraProps) {
-    // console.log(children);
 
     return (
         <div className={styles.camera}>

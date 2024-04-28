@@ -8,10 +8,12 @@ type TGameState = {
 	mapSrc: string,
 	player: TcharacterState,
 	npcs: TcharacterState[],
-	walls: { [key: string]: boolean }
+	walls: { [key: string]: boolean },
+	hitboxes: { [key: string]: boolean }
 };
 
-type TGameStateContext = TGameState & {
+type TGameStateContext = {
+    gameState: TGameState
     dispatch: Dispatch<any>
 };
 
@@ -72,16 +74,16 @@ const gameInitialState: TGameState = {
 	walls: {
 		...getMapBoundaries(40, 23),
 		...getMapCollisions(demoCollisionMap)
-	}
+	},
+	hitboxes: {}
 }
 
 export const GameStateContext = createContext<TGameStateContext>({
-    ...gameInitialState,
+    gameState: gameInitialState,
     dispatch: () => null
 });
 
-const reducer = (state: TGameState, action: TupdateAction) => {
-    console.log(action);
+const reducer = (state: TGameState, _action: TupdateAction) => {
     return state;
 };
 
@@ -89,7 +91,7 @@ export default function GameStateContextProvider({ children }: TGameStateContext
     const [state, dispatch] = useReducer(reducer, gameInitialState);
 
     return (
-        <GameStateContext.Provider value={{ ...state, dispatch }}>
+        <GameStateContext.Provider value={{ gameState: { ...state }, dispatch }}>
             {children}
         </GameStateContext.Provider>
     )

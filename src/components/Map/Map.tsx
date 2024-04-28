@@ -1,17 +1,19 @@
 import type { ReactNode } from "react";
 // import { Children, cloneElement } from "react";
-import type { TGameState } from "../../App";
+// import type { TGameState } from "../../App";
 // import type { TcharacterState } from "../Characters/Character";
 import styles from "./Map.module.css";
 import DemoMapBg from "../../assets/DemoMap_background.png";
 import DemoMapFg from "../../assets/DemoMap_foreground.png";
+import { useGameContext } from "../../hooks/useGameContext";
 
 type TMapProps = {
     children: ReactNode,
-    gameState: TGameState
+    // gameState: TGameState
 };
 
-export default function Map({ children, gameState }: TMapProps) {
+export default function Map({ children }: TMapProps) {
+    const { gameState } = useGameContext();
 	const camera_left = 152;
 	const camera_top = 136;
 

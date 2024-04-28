@@ -26,10 +26,10 @@ export const isSpaceTaken = (
 	currentX: number, 
 	currentY: number, 
 	direction: string,
-	walls: { [key: string]: boolean }
+	collisionObj: { [key: string]: boolean }
 ): boolean => {
 	const {x, y} = nextPosition(currentX, currentY, direction);
-	return walls[`${x},${y}`] || false;
+	return collisionObj[`${x},${y}`] || false;
 };
 
 export const getMapBoundaries = (width: number, height: number) => {
@@ -73,4 +73,18 @@ export const getMapCollisions = (positions: number[][]) => {
 	});
 
 	return mapCollisions;
+};
+
+export const addCollision = (x: number, y: number, collisionObj: { [key: string]: boolean }) => {
+	collisionObj[`${x},${y}`] = true;
+};
+
+export const removeCollision = (x: number, y: number, collisionObj: { [key: string]: boolean }) => {
+	delete collisionObj[`${x},${y}`];
+};
+
+export const moveCollision = (previousX: number, previousY: number, direction: string, collisionObj: { [key: string]: boolean }) => {
+	removeCollision(previousX, previousY, collisionObj);
+	const {x, y} = nextPosition(previousX, previousY, direction);
+	addCollision(x, y, collisionObj);
 };

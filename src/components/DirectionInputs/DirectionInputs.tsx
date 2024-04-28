@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import type { TcharacterState } from "../Characters/Character";
 import { directions } from "../../utils/directions";
+// import { useGameContext } from "../../hooks/useGameContext";
 
 type TkeyCodes = { [key: string]: string; };
 
@@ -9,13 +10,15 @@ type TDirectionInputsProps = {
     playerState: TcharacterState
 };
 
+const keyCodes: TkeyCodes = {
+    "ArrowUp": directions.up,
+    "ArrowLeft": directions.left,
+    "ArrowRight": directions.right,
+    "ArrowDown": directions.down,
+};
+
 export default function DirectionInputs({ children, playerState }: TDirectionInputsProps) {
-    const keyCodes: TkeyCodes = {
-        "ArrowUp": directions.up,
-        "ArrowLeft": directions.left,
-        "ArrowRight": directions.right,
-        "ArrowDown": directions.down,
-    };
+    // const { gameState, dispatch } = useGameContext();
 
     useEffect(() => {
         document.addEventListener("keydown", (e) => {
