@@ -38,7 +38,7 @@ const gameInitialState: TGameState = {
 		movingProgressRemaining: 0,
 		facing: "up",
 		walking: "false",
-		speed: 2,
+		speed: 1,
 		characterWidth: 16,
 		characterHeight: 16
 	},
@@ -46,14 +46,31 @@ const gameInitialState: TGameState = {
 		{
 			id: 0,
 			coord: {
-				x: gridCell(20),
+				x: gridCell(21),
 				y: gridCell(17)
 			},
 			held_directions: [],
 			movingProgressRemaining: 0,
 			facing: "down",
 			walking: "false",
-			speed: 2,
+			speed: 1,
+			behaviorLoop: [
+				{ type: "walk", direction: "left" },
+				{ type: "walk", direction: "left" },
+				{ type: "walk", direction: "left" },
+				{ type: "stand", direction: "left", time: 1000 },
+				{ type: "walk", direction: "down" },
+				{ type: "walk", direction: "down" },
+				{ type: "stand", direction: "down", time: 1500 },
+				{ type: "walk", direction: "right" },
+				{ type: "walk", direction: "right" },
+				{ type: "walk", direction: "right" },
+				{ type: "stand", direction: "right", time: 1500 },
+				{ type: "walk", direction: "up" },
+				{ type: "walk", direction: "up" },
+				{ type: "stand", direction: "up", time: 1000 }
+			],
+			behaviorIndex: 0,
 			characterWidth: 16,
 			characterHeight: 16
 		}, {
@@ -67,6 +84,14 @@ const gameInitialState: TGameState = {
 			facing: "down",
 			walking: "false",
 			speed: 2,
+			behaviorLoop: [
+				{ type: "stand", direction: "down", time: 1000 },
+				{ type: "stand", direction: "left", time: 2000 },
+				{ type: "stand", direction: "down", time: 1500 },
+				{ type: "stand", direction: "right", time: 2000 },
+				{ type: "stand", direction: "down", time: 1000 }
+			],
+			behaviorIndex: 0,
 			characterWidth: 16,
 			characterHeight: 16
 		}

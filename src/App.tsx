@@ -17,58 +17,6 @@ export type TGameState = {
 	walls: { [key: string]: boolean }
 };
 
-// const gameInitialState: TGameState = {
-// 	mapSrc: "",
-// 	player: {
-// 		// id: 0,
-// 		coord: {
-// 			x: gridCell(19),
-// 			y: gridCell(14)
-// 		},
-// 		held_directions: [],
-// 		movingProgressRemaining: 0,
-// 		facing: "up",
-// 		walking: "false",
-// 		speed: 4,
-// 		characterWidth: 16,
-// 		characterHeight: 16
-// 	},
-// 	npcs: [
-// 		{
-// 			id: 0,
-// 			coord: {
-// 				x: gridCell(20),
-// 				y: gridCell(17)
-// 			},
-// 			held_directions: [],
-// 			movingProgressRemaining: 0,
-// 			facing: "down",
-// 			walking: "false",
-// 			speed: 1,
-// 			characterWidth: 16,
-// 			characterHeight: 16
-// 		}, {
-// 			id: 1,
-// 			coord: {
-// 				x: gridCell(21),
-// 				y: gridCell(12)
-// 			},
-// 			held_directions: [],
-// 			movingProgressRemaining: 0,
-// 			facing: "down",
-// 			walking: "false",
-// 			speed: 1,
-// 			characterWidth: 16,
-// 			characterHeight: 16
-// 		}
-// 	],
-// 	walls: {
-// 		...getMapBoundaries(40, 23),
-// 		...getMapCollisions(demoCollisionMap)
-// 	}
-// }
-
-
 export default function App() {
 	const [step, setStep] = useState<number>(0);
 	// const [gameState, _setGameState] = useState<TGameState>(gameInitialState);
