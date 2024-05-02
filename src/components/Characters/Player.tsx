@@ -5,15 +5,15 @@
 // import { gridCell } from "../../../utils/grid";
 import type { TCharacterProps } from "./Character";
 import Character from "./Character";
-import DirectionInputs from "../DirectionInputs/DirectionInputs";
+import PlayerInputs from "../PlayerInputs/PlayerInputs";
 import { useGameContext } from "../../hooks/useGameContext";
 
 export default function Player(props: TCharacterProps) {
 	const { gameState } = useGameContext();
 
 	return (
-		<DirectionInputs playerState={gameState.player}>
+		<PlayerInputs playerState={gameState.player}>
 			<Character {...props} />
-		</DirectionInputs>
+		</PlayerInputs>
 	)
 };

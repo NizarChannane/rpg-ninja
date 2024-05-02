@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { TcharacterState } from "./components/Characters/Character";
+// import type { TcharacterState } from "./components/Characters/Character";
 import Camera from "./components/Camera/Camera";
 import Map from "./components/Map/Map";
 import Character from "./components/Characters/Character";
@@ -10,12 +10,12 @@ import { useGameContext } from "./hooks/useGameContext";
 // import { demoCollisionMap } from "./maps/Demo/collisionMap";
 import styles from "./App.module.css";
 
-export type TGameState = { 
-	mapSrc: string,
-	player: TcharacterState,
-	npcs: TcharacterState[],
-	walls: { [key: string]: boolean }
-};
+// export type TGameState = { 
+// 	mapSrc: string,
+// 	player: TcharacterState,
+// 	npcs: TcharacterState[],
+// 	walls: { [key: string]: boolean }
+// };
 
 export default function App() {
 	const [step, setStep] = useState<number>(0);

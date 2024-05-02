@@ -4,7 +4,7 @@ import { gridCell } from "../utils/grid";
 import { getMapBoundaries, getMapCollisions } from "../utils/collisions";
 import { demoCollisionMap } from "../maps/Demo/collisionMap";
 
-type TGameState = {
+export type TGameState = {
 	mapSrc: string,
 	player: TcharacterState,
 	npcs: TcharacterState[],
