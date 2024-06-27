@@ -1,31 +1,12 @@
 import { useEffect } from "react";
 import { useGameContext } from "../../hooks/useGameContext";
-// import { isSpaceTaken, addCollision, moveCollision } from "../../utils/collisions";
-// import { gridCell } from "../../utils/grid";
-// import { emitCustomEvent, addCustomEventListener } from "../../utils/gameEvents";
 import utils from "../../utils/utilsIndex";
 import type { TbehaviorObj } from "../../utils/characterBehaviors";
 import styles from "./Character.module.css";
 import characterWalkSpritesheet from "../../assets/Walk.png";
 import characterShadow from "../../assets/Shadow.png";
 
-// type TdirectionUpdates = {
-// 	[x: string]: [string, number];
-// };
 
-// type TwalkBehavior = {
-//     type: "walk",
-//     direction: string,
-// 	retry?: boolean
-// };
-
-// type TstandBehavior = {
-// 	type: "stand",
-//     direction: string,
-// 	time: number
-// };
-
-// type TbehaviorObj = TwalkBehavior | TstandBehavior;
 
 export type TcharacterState = {
 	id?: number,
@@ -44,6 +25,8 @@ export type TcharacterState = {
 	characterHeight: number
 };
 
+
+
 export type TCharacterProps = {
     step: number
 } & ({
@@ -53,25 +36,11 @@ export type TCharacterProps = {
     index: number
 });
 
-// const directions = {
-// 	up: "up",
-// 	down: "down",
-// 	left: "left",
-// 	right: "right",
-// };
 
-// const directionUpdates: TdirectionUpdates = {
-// 	[directions.up]: ["y", -1],
-// 	[directions.down]: ["y", 1],
-// 	[directions.left]: ["x", -1],
-// 	[directions.right]: ["x", 1]
-// };
 
 export default function Character(props: TCharacterProps) {
     const { gameState } = useGameContext();
-    const characterState = props.isPlayer ? 
-                            (useGameContext()).gameState.player : 
-                            (useGameContext()).gameState.npcs[props.index];
+    const characterState = props.isPlayer ? (useGameContext()).gameState.player : (useGameContext()).gameState.npcs[props.index];
 
 
 
@@ -85,91 +54,6 @@ export default function Character(props: TCharacterProps) {
 			utils.gameEvents.emitCustomEvent("MovingProgressComplete", characterState)
 		};
     };
-
-
-
-    // const startBehavior = (state: TcharacterState, behavior: TbehaviorObj) => {
-    //     state.facing = behavior.direction;
-
-    //     if(behavior.type === "walk") {
-    //         if(isSpaceTaken(
-    //             state.coord.x,
-    //             state.coord.y,
-    //             state.facing,
-    //             {
-    //                 ...gameState.walls,
-    //                 ...gameState.hitboxes
-    //             }
-    //         )) {
-	// 			behavior.retry && setTimeout(() => {
-	// 				startBehavior(state, behavior);
-	// 			}, 10);
-
-	// 			return;
-	// 		};
-	// 		moveCollision(state.coord.x, state.coord.y, state.facing, gameState.hitboxes);
-	// 		state.movingProgressRemaining = gridCell(1);
-    //     };
-
-	// 	if(behavior.type === "stand") {
-	// 		setTimeout(() => {
-	// 			emitCustomEvent("StandComplete", state);
-	// 		}, behavior.time);
-	// 	};
-    // };
-
-
-
-	// const behaviorFunctions: { [key: string]: (state: TcharacterState, behavior: TbehaviorObj, resolve: (value: unknown) => void) => void } = {
-
-	// 	walk: (state, behavior, resolve) => {
-	// 		state.walking = "true";
-	// 		startBehavior(state, {
-	// 			type: "walk",
-	// 			direction: behavior.direction,
-	// 			retry: true
-	// 		});
-
-	// 		addCustomEventListener("MovingProgressComplete", state, resolve);
-	// 	},
-
-	// 	stand: (state, behavior, resolve) => {
-	// 		if(behavior.type === "stand") {
-	// 			startBehavior(state, {
-	// 				type: "stand",
-	// 				direction: behavior.direction,
-	// 				time: behavior.time
-	// 			});
-	// 		};
-
-	// 		addCustomEventListener("StandComplete", state, resolve);
-	// 	}
-	// };
-
-
-
-	// const npcBehaviors = (state: TcharacterState, behavior: TbehaviorObj) => {
-	// 	return new Promise((resolve) => {
-	// 		behaviorFunctions[behavior.type](state, behavior, resolve);
-	// 	});
-	// };
-
-
-
-	// const executeBehaviorLoops = async (state: TcharacterState) => {
-	// 	let behavior;
-	// 	if(state.behaviorLoop && state.behaviorLoop[0] && typeof state.behaviorIndex === "number") {
-	// 		behavior = state.behaviorLoop[state.behaviorIndex];
-	// 		await npcBehaviors(state, behavior);
-
-	// 		state.behaviorIndex += 1;
-	// 		if(state.behaviorIndex === state.behaviorLoop.length) {
-	// 			state.behaviorIndex = 0;
-	// 		};
-
-	// 		executeBehaviorLoops(state);
-	// 	};
-	// };
 
 
 

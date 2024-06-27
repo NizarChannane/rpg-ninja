@@ -49,7 +49,14 @@ export const startBehavior = (gameState: TGameState, state: TcharacterState, beh
     };
 };
 
-const behaviorFunctions: { [key: string]: (gameState: TGameState, state: TcharacterState, behavior: TbehaviorObj, resolve: (value: unknown) => void) => void } = {
+const behaviorFunctions: { 
+    [key: string]: (
+        gameState: TGameState, 
+        state: TcharacterState, 
+        behavior: TbehaviorObj, 
+        resolve: (value: unknown) => void
+    ) => void 
+} = {
 
     walk: (gameState, state, behavior, resolve) => {
         state.walking = "true";

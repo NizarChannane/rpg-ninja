@@ -1,4 +1,3 @@
-// import { useEffect } from "react";
 import styles from "./Camera.module.css";
 
 type TCameraProps = {

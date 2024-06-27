@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import type { TcharacterState } from "../Characters/Character";
 import { directions } from "../../utils/inputs";
-// import { useGameContext } from "../../hooks/useGameContext";
 
 type TkeyCodes = { [key: string]: string; };
 
@@ -18,7 +17,6 @@ const keyCodes: TkeyCodes = {
 };
 
 export default function PlayerInputs({ children, playerState }: TPlayerInputsProps) {
-    // const { gameState, dispatch } = useGameContext();
 
     useEffect(() => {
         document.addEventListener("keydown", (e) => {
