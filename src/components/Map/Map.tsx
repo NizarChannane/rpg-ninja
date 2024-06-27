@@ -1,7 +1,4 @@
 import type { ReactNode } from "react";
-// import { Children, cloneElement } from "react";
-// import type { TGameState } from "../../App";
-// import type { TcharacterState } from "../Characters/Character";
 import styles from "./Map.module.css";
 import DemoMapBg from "../../assets/DemoMap_background.png";
 import DemoMapFg from "../../assets/DemoMap_foreground.png";

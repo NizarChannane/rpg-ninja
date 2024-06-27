@@ -1,20 +1,12 @@
 import { useEffect } from "react";
-// import type { TGameState } from "../../App";
 import { useGameContext } from "../../hooks/useGameContext";
-import { isSpaceTaken, addCollision, moveCollision } from "../../utils/collisions";
-import { gridCell } from "../../utils/grid";
+import utils from "../../utils/utilsIndex";
+import type { TbehaviorObj } from "../../utils/characterBehaviors";
 import styles from "./Character.module.css";
 import characterWalkSpritesheet from "../../assets/Walk.png";
 import characterShadow from "../../assets/Shadow.png";
 
-type TdirectionUpdates = {
-	[x: string]: [string, number];
-};
 
-type TbehaviorObj = {
-    type: string,
-    direction: string
-};
 
 export type TcharacterState = {
 	id?: number,
@@ -27,136 +19,54 @@ export type TcharacterState = {
 	facing: string,
 	walking: string,
 	speed: number,
+	behaviorLoop?: TbehaviorObj[] | [],
+	behaviorIndex?: number
 	characterWidth: number,
 	characterHeight: number
 };
 
+
+
 export type TCharacterProps = {
-    step: number,
-    // gameState: TGameState,
-    // gameStateSetter: Dispatch<SetStateAction<TGameState>>
+    step: number
 } & ({
     isPlayer: true,
 } | {
     isPlayer: false,
-    index: number,
+    index: number
 });
 
-const directions = {
-	up: "up",
-	down: "down",
-	left: "left",
-	right: "right",
-};
 
-const directionUpdates: TdirectionUpdates = {
-	[directions.up]: ["y", -1],
-	[directions.down]: ["y", 1],
-	[directions.left]: ["x", -1],
-	[directions.right]: ["x", 1]
-};
-
-// const defaultCharacterState: TcharacterState = {
-//     // id: 0,
-//     coord: {
-//         x: gridCell(0),
-//         y: gridCell(0)
-//     },
-//     held_directions: [],
-//     movingProgressRemaining: 0,
-//     facing: "down",
-//     walking: "false",
-//     speed: 2,
-//     characterWidth: 16,
-//     characterHeight: 16
-// }
 
 export default function Character(props: TCharacterProps) {
-    // const initialState = props.isPlayer ? 
-    //                         props.gameState.player 
-    //                         : props.index ? 
-    //                             props.gameState.npcs[props.index] 
-    //                             : defaultCharacterState
-    // const [characterState, setCharacterState] = useState<TcharacterState>(initialState);
     const { gameState } = useGameContext();
-    const characterState = props.isPlayer ? 
-                            (useGameContext()).gameState.player : 
-                            (useGameContext()).gameState.npcs[props.index]
+    const characterState = props.isPlayer ? (useGameContext()).gameState.player : (useGameContext()).gameState.npcs[props.index];
 
-    // const walk = () => {
-    //     setCharacterState((prevState) => {
-    //         let coordUpdate = prevState.coord;
-    //         let progressUpdate = prevState.movingProgressRemaining;
-    //         let facingUpdate = prevState.facing;
-    //         let walkingUpdate = prevState.walking;
 
-    //         if(progressUpdate > 0) {
-    //             walkingUpdate = "true";
-    //             const [property, change] = directionUpdates[prevState.facing];
-    //             coordUpdate[property] += (change * prevState.speed);
-    //             progressUpdate -= prevState.speed;
-    //         }
 
-    //         if(progressUpdate === 0 && prevState.held_directions[0]) {
-    //             facingUpdate = prevState.held_directions[0];
-    //             // console.log(isSpaceTaken(
-    //             //     coordUpdate.x, coordUpdate.y, facingUpdate, props.gameState.walls
-    //             // ));
-    //             if(!isSpaceTaken(coordUpdate.x, coordUpdate.y, facingUpdate, props.gameState.walls)) {
-    //                 progressUpdate = gridCell(1);
-    //             }
-    //         };
-
-    //         if(progressUpdate === 0 && !prevState.held_directions[0]) {
-    //             walkingUpdate = "false";
-    //         }
-
-    //         return {
-    //             ...prevState,
-    //             coord: coordUpdate,
-    //             movingProgressRemaining: progressUpdate,
-    //             facing: facingUpdate,
-    //             walking: walkingUpdate
-    //         };
-    //     });
-    // };
-
-    const walk = () => {
+    const updatePosition = () => {
         characterState.walking = "true";
-        const [property, change] = directionUpdates[characterState.facing];
+        const [property, change] = utils.inputs.directionUpdates[characterState.facing];
         characterState.coord[property] += (change * characterState.speed);
         characterState.movingProgressRemaining -= characterState.speed;
+
+		if(characterState.movingProgressRemaining === 0) {
+			utils.gameEvents.emitCustomEvent("MovingProgressComplete", characterState)
+		};
     };
 
-    const startBehavior = (state: TcharacterState, behavior: TbehaviorObj) => {
-        state.facing = behavior.direction;
 
-        if(behavior.type === "walk") {
-            if(!isSpaceTaken(
-                state.coord.x,
-                state.coord.y,
-                state.facing,
-                {
-                    ...gameState.walls,
-                    ...gameState.hitboxes
-                }
-            )) {
-                moveCollision(characterState.coord.x, characterState.coord.y, characterState.facing, gameState.hitboxes);
-                state.movingProgressRemaining = gridCell(1);
-            };
-        };
-    };
 
-	const updatePosition = () => {
-        // walk();
+	const update = () => {
         if(characterState.movingProgressRemaining > 0) {
-            walk();
+            updatePosition();
         };
 
         if(characterState.movingProgressRemaining === 0 && characterState.held_directions[0]) {
-            startBehavior(characterState, {
+            utils.characterBehaviors.startBehavior(gameState, characterState, {
                 type: "walk",
-                direction: characterState.held_directions[0]
+                direction: characterState.held_directions[0],
+				retry: false
             });
         };
 
@@ -165,13 +75,24 @@ export default function Character(props: TCharacterProps) {
         };
 	};
 
+
+
 	useEffect(() => {
-		updatePosition();
+		update();
 	}, [props.step]);
 
+
+
     useEffect(() => {
-        addCollision(characterState.coord.x, characterState.coord.y, gameState.hitboxes);
-    }, [])
+		if(!props.isPlayer) {
+			setTimeout(() => {
+				utils.characterBehaviors.executeBehaviorLoops(gameState, characterState);
+			}, 500);
+		};
+        utils.collisions.addCollision(characterState.coord.x, characterState.coord.y, gameState.hitboxes);
+    }, []);
+
+
 
 	return (
 		<div 
@@ -195,5 +116,5 @@ export default function Character(props: TCharacterProps) {
 				/>
 			</div>
 		</div>
-	)
+	);
 };
